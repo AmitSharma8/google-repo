@@ -1,0 +1,14 @@
+FROM ubuntu:14.04
+RUN apt-get update
+LABEL name="amit sharma"
+LABEL email=47amitsharma@gmail.com
+ENV Name=amitsha
+ENV Pass=docker@2021
+RUN adduser $Name && echo "$Name:$Pass" | chpasswd
+WORKDIR /tmp
+COPY india test1 /tmp/
+ADD amit.tar /tmp/
+RUN apt-get install openssh-server -y && apt-get install openssh-client -y
+RUN mkdir -p /var/run/sshd
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
